@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 public class Matrix
 {
@@ -9,13 +10,26 @@ public class Matrix
 		this.matrix = matrix;
 	}
 
-	public List<float> Line(int index)
+
+    /// <summary>
+    /// Function returning a line in matrix by index
+    /// </summary>
+    /// <param name="index">line number</param>
+    /// <returns>line in matrix</returns>
+    public List<float> Line(int index)
 	{	// returning needed lane
 		return matrix[index];
 	}
 
-	public List<float> LineMultiplication(List<float> line, float multiplier)
-	{	// Returned new line with multiplier
+
+    /// <summary>
+    /// Returned new line with multiplier
+    /// </summary>
+    /// <param name="line">multiplied line</param>
+    /// <param name="multiplier">Multiplier</param>
+    /// <returns>line * multiplier</returns>
+    public List<float> LineMultiplication(List<float> line, float multiplier)
+	{
 		var newLine = new List<float>();
 
 		foreach(var number in line)
@@ -26,6 +40,12 @@ public class Matrix
 		return (newLine);
     }
 
+
+	/// <summary>
+	/// Swap lines in matrix by index
+	/// </summary>
+	/// <param name="firstIndex">index of first line</param>
+	/// <param name="secondIndex">index of second line</param>
 	public void SwapLines(int firstIndex, int secondIndex)
 	{	// Swap lines in our matrix
 		var bufferLine = matrix[firstIndex];
@@ -33,8 +53,14 @@ public class Matrix
 		matrix[secondIndex] = bufferLine;
 	}
 
-	public void LineSubtraction(List<float> line, int lineNumber)
-    {   // Subtracts a line from the selected line
+
+    /// <summary>
+    /// Subtracts a line from selected line
+    /// </summary>
+    /// <param name="line">The line to be subtracted</param>
+    /// <param name="lineNumber">The number of line from matrix from which we subtract</param>
+    public void LineSubtraction(List<float> line, int lineNumber)
+    {
 		int index = 0;
 		foreach (float element in matrix[lineNumber])
 		{
@@ -45,7 +71,11 @@ public class Matrix
 		matrix[lineNumber] = new List<float>(line);
     }
 
-	public void PrintResult()
+
+    /// <summary>
+    /// Matrix output
+    /// </summary>
+    public void PrintResult()
 	{
 		foreach(List<float> line in matrix)
 		{
@@ -55,6 +85,39 @@ public class Matrix
 			}
 			Console.WriteLine();
 		}
+	}
+
+
+    /// <summary>
+    /// Subtracts from a line another multiplied line
+    /// </summary>
+    /// <param name="lineNumber">Line number from which to subtract</param>
+    /// <param name="baseLineNumber">Line number to subtract</param>
+    /// <param name="multiplier">Subtracted line multiplier</param>
+    public void SubstractFromMultiplied(int lineNumber, int baseLineNumber, float multiplier)
+	{
+		LineSubtraction(
+			LineMultiplication(
+				Line(baseLineNumber), multiplier), lineNumber);
+
+    }
+
+
+    /// <summary>
+    /// Finding a multiplier to turn elements to the left of the main diagonal into 0
+    /// </summary>
+    /// <param name="lineNumber"></param>
+    /// <returns></returns>
+    public float MultiplierFinder(int lineNumber)
+	{
+		if (lineNumber <= 0)
+		{
+			Console.WriteLine("Error, line number < 1");
+			Console.WriteLine("MultiplierFinder return 0");
+			return 0;
+		}
+
+		return matrix[lineNumber][lineNumber - 1] / matrix[lineNumber - 1][lineNumber - 1];
 	}
 
 }
