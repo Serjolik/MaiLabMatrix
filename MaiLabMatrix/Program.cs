@@ -7,16 +7,16 @@ class Program
 
         List<List<float>> matrix = new List<List<float>>()
         {
-        new List<float> { 1, 0.5f, 0.5f },
-        new List<float> { 0.5f, 1, 0.5f },
-        new List<float> { 0.5f, 0.5f, 1 },
+        new List<float> { 1, 2, 3, 4 },
+        new List<float> { 5, 1, 3, 1 },
+        new List<float> { 3, 7, 2, 6 },
         };
 
         clMatrix = new Matrix(matrix);
 
 
         clMatrix.PrintResult();
-
+        /*
         Console.WriteLine("--------------------");
         Console.WriteLine(clMatrix.MultiplierFinder(1));
         Console.WriteLine(clMatrix.MultiplierFinder(2));
@@ -28,6 +28,14 @@ class Program
         clMatrix.SwapLines(1, 2);
 
         Console.WriteLine("--------------------");
+        clMatrix.PrintResult();
+
+        clMatrix = new Matrix(matrix);
+
+        clMatrix.PrintResult();
+        */
+        Console.WriteLine("--------------------");
+        clMatrix.Gauss(3);
         clMatrix.PrintResult();
 
         Console.ReadKey();

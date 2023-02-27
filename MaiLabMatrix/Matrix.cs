@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Reflection;
 
 public class Matrix
 {
@@ -108,16 +110,55 @@ public class Matrix
     /// </summary>
     /// <param name="lineNumber"></param>
     /// <returns></returns>
-    public float MultiplierFinder(int lineNumber)
+    public float MultiplierFinder(int x, int y)
 	{
-		if (lineNumber <= 0)
+		if (x == y)
 		{
-			Console.WriteLine("Error, line number < 1");
+			Console.WriteLine("Error, line number == element number");
 			Console.WriteLine("MultiplierFinder return 0");
 			return 0;
 		}
 
-		return matrix[lineNumber][lineNumber - 1] / matrix[lineNumber - 1][lineNumber - 1];
+        Console.WriteLine("CHECK MATRIX");
+        Console.WriteLine(matrix[x][y]);
+        Console.WriteLine(matrix[y][y]);
+        Console.WriteLine("---------------------");
+
+        return matrix[x][y] / matrix[y][y];
 	}
+
+	public void Gauss(int size)
+	{
+		//Convert to triangle matrix:
+		ConvertingToTriangleMatrix(size);
+
+		//Convert elements from main diagonal to 1
+		ConvertingMainElemts(size);
+
+
+    }
+
+	public void ConvertingToTriangleMatrix(int size)
+	{
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = i; j < 3; j++)
+            {
+                /*
+                Console.WriteLine(MultiplierFinder(j, i));
+				Console.WriteLine("NEXT:");
+				*/
+                SubstractFromMultiplied(j, i, MultiplierFinder(j, i));
+            }
+        }
+    }
+
+	public void ConvertingMainElemts(int size)
+	{
+        for (int i = 0; i < size; i++)
+        {
+            matrix[i] = LineMultiplication(matrix[i], 1 / matrix[i][i]);
+        }
+    }
 
 }
