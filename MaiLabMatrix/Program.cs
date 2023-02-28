@@ -1,43 +1,59 @@
-﻿using System;
-class Program
+﻿namespace lab1_LU
 {
-    static void Main()
+    public class Program
     {
-        Matrix clMatrix;
-
-        List<List<float>> matrix = new List<List<float>>()
+        static void Main()
         {
-        new List<float> { 1, 2, 3, 4 },
-        new List<float> { 5, 1, 3, 1 },
-        new List<float> { 3, 7, 2, 6 },
-        };
+            Matrix matrix = new Matrix();
+            int size = 1;
 
-        clMatrix = new Matrix(matrix);
+            Console.WriteLine("Проверьте, что создали и заполнили файл Matrix.txt");
+            Console.WriteLine("Нажмите Enter для продолжения");
 
+            var pressed = Console.ReadLine();
 
-        clMatrix.PrintResult();
-        /*
-        Console.WriteLine("--------------------");
-        Console.WriteLine(clMatrix.MultiplierFinder(1));
-        Console.WriteLine(clMatrix.MultiplierFinder(2));
+            Console.WriteLine();
 
-        clMatrix.LineSubtraction(
-            clMatrix.LineMultiplication(
-                clMatrix.Line(0), 2), 1);
+            Console.WriteLine("Введите размерность матрицы");
+            try
+            {
+                size = Convert.ToInt32(Console.ReadLine());
+            }
+            catch
+            {
+                Console.WriteLine("Неверный формат размера");
+                return;
+            }
 
-        clMatrix.SwapLines(1, 2);
+            if (!File.Exists("Matrix.txt"))
+            {
+                Console.WriteLine("Matrix.txt Not exist!");
+                return;
+            }
+            string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
 
-        Console.WriteLine("--------------------");
-        clMatrix.PrintResult();
+            double[,] mat = new double[size, size];
+            double[] rightPart = new double[size];
 
-        clMatrix = new Matrix(matrix);
+            // разобрать в массивы
+            for (int i = 0; i < size; i++)
+            {
+                double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
+                for (int j = 0, n = 0; n < size + 1; n++, j++)
+                {
 
-        clMatrix.PrintResult();
-        */
-        Console.WriteLine("--------------------");
-        clMatrix.Gauss(3);
-        clMatrix.PrintResult();
-
-        Console.ReadKey();
+                    if (j == size)
+                    {
+                        rightPart[i] = row[j];
+                    }
+                    else
+                    {
+                        mat[i, j] = row[j];
+                    }
+                }
+            }
+            matrix.LUP(mat, rightPart);
+            Console.WriteLine("Программа завершена, проверьте файл Result");
+        }
     }
 }
