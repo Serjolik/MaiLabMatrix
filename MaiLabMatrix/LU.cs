@@ -1,17 +1,14 @@
-using System.Drawing;
-
 public class LU
-{   // Алгоритм лабораторной 1.1
+{   // РђР»РіРѕСЂРёС‚Рј Р»Р°Р±РѕСЂР°С‚РѕСЂРЅРѕР№ 1.1
     public void Program(Matrix matrix, int size)
-    {
-        // Записываем массив строк
+    {   // Р—Р°РїРёСЃС‹РІР°РµРј РјР°СЃСЃРёРІ СЃС‚СЂРѕРє
         string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
 
-        // Записываем двумерную матрицу и вектор правой части
+        // Р—Р°РїРёСЃС‹РІР°РµРј РґРІСѓРјРµСЂРЅСѓСЋ РјР°С‚СЂРёС†Сѓ Рё РІРµРєС‚РѕСЂ РїСЂР°РІРѕР№ С‡Р°СЃС‚Рё
         double[,] mat = new double[size, size];
         double[] rightPart = new double[size];
 
-        // разобрать в массивы
+        // СЂР°Р·РѕР±СЂР°С‚СЊ РІ РјР°СЃСЃРёРІС‹
         for (int i = 0; i < size; i++)
         {
             double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
@@ -29,9 +26,9 @@ public class LU
             }
         }
 
-        // Запускаем Алгоритм из библиотеки matrix
+        // Р—Р°РїСѓСЃРєР°РµРј РђР»РіРѕСЂРёС‚Рј РёР· Р±РёР±Р»РёРѕС‚РµРєРё matrix
         matrix.LUP(mat, rightPart);
 
-        Console.WriteLine("Программа завершена, проверьте файл Result_1_1");
+        Console.WriteLine("РџСЂРѕРіСЂР°РјРјР° Р·Р°РІРµСЂС€РµРЅР°, РїСЂРѕРІРµСЂСЊС‚Рµ С„Р°Р№Р» Result_1_1");
     }
 }
