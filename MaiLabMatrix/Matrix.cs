@@ -7,7 +7,14 @@
     //  | LU алгоритм и вычисление СЛАУ      |
     //  |------------------------------------|
 
-
+    /// <summary>
+    /// Выводит в файл выполнение 1.1
+    /// </summary>
+    /// <param name="n">Размерность массива</param>
+    /// <param name="L">L Матрица</param>
+    /// <param name="U">U Матрица</param>
+    /// <param name="lu">lu Матрица</param>
+    /// <param name="x">Вектор решения</param>
     private void OutputFile(int n, double[,] L, double[,] U, double[,] lu, double[] x)
     {   // Вывод в файлы
 
@@ -36,9 +43,15 @@
         }
     }
 
+    /// <summary>
+    /// Перемножает матрицы
+    /// </summary>
+    /// <param name="matrixA">Первая матрица</param>
+    /// <param name="matrixB">Вторая матрица</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     private double[,] Mult(double[,] matrixA, double[,] matrixB)
-    {   // Функция умножения матриц
-
+    {
         if (matrixA.GetLength(1) != matrixB.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
 
@@ -57,26 +70,38 @@
         return r;
     }
 
-    private double[] Mult(double[,] matrixA, double[] matrixB)
-    {   // Функция умножения матрицы на вектор
-
-        if (matrixA.GetLength(1) != matrixB.GetLength(0))
+    /// <summary>
+    /// Перемножает матрицу и вектор
+    /// </summary>
+    /// <param name="matrixA">Матрица</param>
+    /// <param name="Vector">Вектор</param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    private double[] Mult(double[,] matrixA, double[] Vector)
+    {
+        if (matrixA.GetLength(1) != Vector.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
 
-        double[] r = new double[matrixB.GetLength(0)];
+        double[] r = new double[Vector.GetLength(0)];
 
         for (int i = 0; i < matrixA.GetLength(0); i++)
         {
-            for (int j = 0; j < matrixB.GetLength(0); j++)
+            for (int j = 0; j < Vector.GetLength(0); j++)
             {
-                r[i] += matrixA[i, j] * matrixB[j];
+                r[i] += matrixA[i, j] * Vector[j];
             }
         }
         return r;
     }
 
+    /// <summary>
+    /// Функция которая печатает в файл матрицу
+    /// </summary>
+    /// <param name="outputFile">Файл в который записываем</param>
+    /// <param name="n">Размерность матрицы</param>
+    /// <param name="matrix">Сама матрица</param>
     private void PrintTable(StreamWriter outputFile, int n, double[,] matrix)
-    {   // Печатание таблицы
+    {
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
@@ -87,20 +112,32 @@
         }
     }
 
-
-    private double[,] Transposition(double[,] a)
-    {   // Транспонирование
-        double[,] r = new double[a.GetLength(0), a.GetLength(1)];
-        for (int i = 0; i < a.GetLength(0); i++)
+    /// <summary>
+    /// Транспонирование матрицы
+    /// </summary>
+    /// <param name="matrix">Матрица которую транспонируем</param>
+    /// <returns>Транпонированная матрица</returns>
+    private double[,] Transposition(double[,] matrix)
+    {
+        double[,] r = new double[matrix.GetLength(0), matrix.GetLength(1)];
+        for (int i = 0; i < matrix.GetLength(0); i++)
         {
-            for (int j = 0; j < a.GetLength(1); j++)
+            for (int j = 0; j < matrix.GetLength(1); j++)
             {
-                r[i, j] = a[j, i];
+                r[i, j] = matrix[j, i];
             }
         }
         return r;
     }
 
+    /// <summary>
+    /// Функция которая меняет местами строки
+    /// </summary>
+    /// <param name="matrix">Матрица</param>
+    /// <param name="pivot">Номер первой строки</param>
+    /// <param name="i">Номер второй строки</param>
+    /// <param name="n">Размерность матрицы</param>
+    /// <returns>Матрица с поменянными строками</returns>
     private double[,] SwapRows(double[,] matrix, int pivot, int i, int n)
     {   // Свап строк
         for (int j = 0; j < n; j++)
@@ -113,15 +150,19 @@
         return matrix;
     }
 
-    public void LUP(double[,] A, double[] rightPart)
-    {   // Сам алгоритм LUP
-
-        int n = A.GetLength(0);
+    /// <summary>
+    /// Основа Алгоритма 1.1
+    /// </summary>
+    /// <param name="matrix">Матрица</param>
+    /// <param name="rightPart">Правая часть со значениями</param>
+    public void LUP(double[,] matrix, double[] rightPart)
+    {
+        int n = matrix.GetLength(0);
 
         double[,] C = new double[n, n];
         double[,] P = new double[n, n];
 
-        C = A;
+        C = matrix;
 
         /* Пусть матрица P - единичная матрица:
          * [1 0 0 0]
@@ -247,9 +288,16 @@
     //  | ПРОГОНКА И ТРЁХДИАГОНАЛЬНАЯ МАТРИЦА|
     //  |------------------------------------|
 
-
+    /// <summary>
+    /// Сам основной Алгоритм 1.2
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="c"></param>
+    /// <param name="d"></param>
+    /// <param name="size">Размерность</param>
     public void Progonka(double[] a, double[] b, double[] c, double[] d, int size)
-    {   // Алгоритм Прогонки
+    {
         double[] P = new double[size];
         double[] Q = new double[size];
 
@@ -295,6 +343,10 @@
         OutputFile(X);
     }
 
+    /// <summary>
+    /// Запись результатов в файл
+    /// </summary>
+    /// <param name="X">Вектор ответов</param>
     private void OutputFile(double[] X)
     {
         //Проверка на существование файла с ответами
@@ -321,8 +373,13 @@
      * ;
      */
 
-
-    private double Norm(double[,] a, int size)
+    /// <summary>
+    /// Нормирование матрицы
+    /// </summary>
+    /// <param name="matrix">Матрица</param>
+    /// <param name="size">Размерность</param>
+    /// <returns></returns>
+    private double Norm(double[,] matrix, int size)
     {
         double[] sum = new double[size];
         double norm = 0;
@@ -330,13 +387,19 @@
         {
             for (int j = 0, n = 0; n < size; n++, j++)
             {
-                sum[i] += Math.Abs(a[i, j]);
+                sum[i] += Math.Abs(matrix[i, j]);
             }
         }
         norm = sum.Max();
         return norm;
     }
 
+    /// <summary>
+    /// Нормирование вектора
+    /// </summary>
+    /// <param name="X">Вектор</param>
+    /// <param name="size">Размерность</param>
+    /// <returns></returns>
     private double Norm(double[] X, int size)
     {
         double norm = 0;
@@ -348,6 +411,7 @@
         return norm;
     }
 
+    
     private double[] Subt(double[] a, double[] b)
     {
         double[] r = new double[b.GetLength(0)];
@@ -461,30 +525,38 @@
 
         return rev;
     }
-    public void Mpi(double[,] a, double[] b, int size, double e)
-    {   // МЕТОД ПРОСТЫХ ИТЕРАЦИЙ
+
+    /// <summary>
+    /// Основной алгоритм Метода простых итераций
+    /// </summary>
+    /// <param name="matrix">Матрица</param>
+    /// <param name="right">Правая часть</param>
+    /// <param name="size">Размерность</param>
+    /// <param name="e">Точность</param>
+    public void Mpi(double[,] matrix, double[] right, int size, double e)
+    {
         double e_n = 1;
         double[] X = new double[size];
         double[] X_prev = new double[size];
 
         for (int i = 0; i < size; i++)
         {
-            X_prev[i] = b[i];
+            X_prev[i] = right[i];
         }
 
         double[] r = new double[X_prev.GetLength(0)];
         int it = 0;
         while (e_n > e)
         {
-            r = Mult(a, X_prev);
+            r = Mult(matrix, X_prev);
             for (int i = 0; i < size; i++)
             {
-                X[i] = b[i] + r[i];
+                X[i] = right[i] + r[i];
             }
-            if (Norm(a, size) >= 1)
+            if (Norm(matrix, size) >= 1)
                 e_n = Norm(Subt(X, X_prev), size);
             else
-                e_n = Norm(a, size) / (1 - Norm(a, size)) * Norm(Subt(X, X_prev), size);
+                e_n = Norm(matrix, size) / (1 - Norm(matrix, size)) * Norm(Subt(X, X_prev), size);
             for (int i = 0; i < size; i++)
             {
                 X_prev[i] = X[i];
@@ -495,9 +567,15 @@
         OutputFileMPI(X_prev ,it);
     }
 
-    public void Zdl(double[,] a, double[] b, int size, double e)
-    {   // МЕТОД ЗЕЙДЕЛЯ
-
+    /// <summary>
+    /// Основной алгоритм Метода Зейделя
+    /// </summary>
+    /// <param name="matrix">Матрица</param>
+    /// <param name="right">Правая часть</param>
+    /// <param name="size">Размерность</param>
+    /// <param name="e">Точность</param>
+    public void Zdl(double[,] matrix, double[] right, int size, double e)
+    {
         //вспомогательные матрицы
         double[,] C = new double[size, size];
         double[,] D = new double[size, size];
@@ -514,12 +592,12 @@
                     E[i, j] = 0;
                 if (j >= i)
                 {
-                    D[i, j] = a[i, j];
+                    D[i, j] = matrix[i, j];
                     C[i, j] = 0;
                 }
                 else
                 {
-                    C[i, j] = a[i, j];
+                    C[i, j] = matrix[i, j];
                     D[i, j] = 0;
                 }
             }
@@ -531,7 +609,7 @@
 
         for (int i = 0; i < size; i++)
         {
-            X_prev[i] = b[i];
+            X_prev[i] = right[i];
         }
 
         double[] r = new double[X_prev.GetLength(0)];
@@ -540,12 +618,12 @@
 
         while (e_n > e)
         {
-            X = Add(Mult(Mult(Reversed_m(Subt(E, C)), D), X_prev), Mult(Reversed_m(Subt(E, C)), b));
+            X = Add(Mult(Mult(Reversed_m(Subt(E, C)), D), X_prev), Mult(Reversed_m(Subt(E, C)), right));
 
-            if (Norm(a, size) >= 1)
+            if (Norm(matrix, size) >= 1)
                 e_n = Norm(Subt(X, X_prev), size);
             else
-                e_n = Norm(D, size) / (1 - Norm(a, size)) * Norm(Subt(X, X_prev), size);
+                e_n = Norm(D, size) / (1 - Norm(matrix, size)) * Norm(Subt(X, X_prev), size);
 
             for (int i = 0; i < size; i++)
             {
@@ -559,6 +637,11 @@
         OutputFileZDL(X_prev, it);
     }
 
+    /// <summary>
+    /// Вывод Метода простых итераций
+    /// </summary>
+    /// <param name="X_prev">Вектор ответов</param>
+    /// <param name="it">Количество итераций</param>
     private void OutputFileMPI(double[] X_prev, int it)
     {
         //Проверка на существование файла с ответами
@@ -576,6 +659,11 @@
         }
     }
 
+    /// <summary>
+    /// Вывод метода Зейделя
+    /// </summary>
+    /// <param name="X_prev">Вектор ответов</param>
+    /// <param name="it">Количество итераций</param>
     private void OutputFileZDL(double[] X_prev, int it)
     {
         //Проверка на существование файла с ответами

@@ -2,7 +2,7 @@ public class Sim_Zdl
 {   // Алгоритм лабораторной 1.3
     public void Program(Matrix matrix, int size)
     {
-        // Точность вычислений для Зейделя
+        // Точность вычислений
         double e = 0.01;
 
         // Записываем массив строк
