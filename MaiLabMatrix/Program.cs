@@ -7,6 +7,7 @@
             Matrix matrix = new Matrix();
             LU lu = new LU();
             Triagonal triagonal = new Triagonal();
+            Sim_Zdl sim_zdl = new Sim_Zdl();
 
             int size = 1;
 
@@ -51,6 +52,7 @@
                     triagonal.Program(matrix, size);
                     break;
                 case ("1.3"):
+                    sim_zdl.Program(matrix, size);
                     break;
                 default:
                     Console.WriteLine("Неверный выбор алгоритма");
