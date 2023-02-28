@@ -314,7 +314,7 @@
      */
 
 
-    public double Norm(double[,] a, int size)
+    private double Norm(double[,] a, int size)
     {
         double[] sum = new double[size];
         double norm = 0;
@@ -329,7 +329,7 @@
         return norm;
     }
 
-    public double Norm(double[] X, int size)
+    private double Norm(double[] X, int size)
     {
         double norm = 0;
         for (int i = 0; i < size; i++)
@@ -340,7 +340,7 @@
         return norm;
     }
 
-    public double[] Subt(double[] a, double[] b)
+    private double[] Subt(double[] a, double[] b)
     {
         double[] r = new double[b.GetLength(0)];
         for (int i = 0; i < a.GetLength(0); i++)
@@ -349,7 +349,7 @@
         }
         return r;
     }
-    public double[,] Subt(double[,] a, double[,] b)
+    private double[,] Subt(double[,] a, double[,] b)
     {
         double[,] r = new double[a.GetLength(0), a.GetLength(1)];
         for (int i = 0; i < a.GetLength(1); i++)
@@ -362,7 +362,7 @@
         return r;
     }
 
-    public double[] Add(double[] a, double[] b)
+    private double[] Add(double[] a, double[] b)
     {
         double[] r = new double[a.GetLength(0)];
         for (int i = 0; i < a.GetLength(0); i++)
@@ -372,7 +372,7 @@
         return r;
     }
 
-    public double[,] Reversed_m(double[,] m)
+    private double[,] Reversed_m(double[,] m)
     {
         int n = m.GetLength(0);
 
