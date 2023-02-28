@@ -1,15 +1,22 @@
 ﻿public class Matrix
 {
 
+
+    //  |------------------------------------|
+    //  | РАЗДЕЛ 1.1                         |
+    //  | LU алгоритм и вычисление СЛАУ      |
+    //  |------------------------------------|
+
+
     private void OutputFile(int n, double[,] L, double[,] U, double[,] lu, double[] x)
     {
         //Проверка на существование файла с ответами
-        if (!File.Exists("Result.txt"))
+        if (!File.Exists("Result_1_1.txt"))
         {
-            File.Create("Result.txt").Close();
+            File.Create("Result_1_1.txt").Close();
         }
 
-        using (StreamWriter outputFile = new StreamWriter("Result.txt"))
+        using (StreamWriter outputFile = new StreamWriter("Result_1_1.txt"))
         {
             outputFile.WriteLine("L:");
             PrintTable(outputFile, n, L);
@@ -224,6 +231,75 @@
 
         //вывод
         OutputFile(n, L, U, lu, x);
+    }
+
+
+    //  |------------------------------------|
+    //  | РАЗДЕЛ 1.2                         |
+    //  | ПРОГОНКА И ТРЁХДИАГОНАЛЬНАЯ МАТРИЦА|
+    //  |------------------------------------|
+
+
+    public void Progonka(double[] a, double[] b, double[] c, double[] d, int size)
+    {
+        double[] P = new double[size];
+        double[] Q = new double[size];
+
+        double[] X = new double[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            /*
+            //проверка достаточного условия
+
+            if ((a[i] == 0 && i != 0) || (c[i] == 0 && i != size - 1) || (Math.Abs(b[i]) < Math.Abs(a[i]) + Math.Abs(c[i])))
+            {
+              Console.WriteLine("Warning: exception - sufficient convergence condition is not satisfied.");
+            Environment.Exit(-1);
+            }
+
+            */
+
+            if (i == 0)
+            {
+                P[i] = -c[i] / b[i];
+                Q[i] = d[i] / b[i];
+            }
+            else
+            {
+                P[i] = -c[i] / (b[i] + a[i] * P[i - 1]);
+                Q[i] = (d[i] - a[i] * Q[i - 1]) / (b[i] + a[i] * P[i - 1]);
+            }
+        }
+
+        for (int i = size - 1; i >= 0; i--)
+        {
+            if (i == size - 1)
+            {
+                X[i] = Q[i];
+            }
+            else
+            {
+                X[i] = P[i] * X[i + 1] + Q[i];
+            }
+
+        }
+        OutputFile(X);
+    }
+
+    private void OutputFile(double[] X)
+    {
+        //Проверка на существование файла с ответами
+        if (!File.Exists("Result_1_2.txt"))
+        {
+            File.Create("Result_1_2.txt").Close();
+        }
+
+        using (StreamWriter outputFile = new StreamWriter("Result_1_2.txt"))
+        {
+            foreach (double x in X)
+                outputFile.WriteLine(x);
+        }
     }
 
 }

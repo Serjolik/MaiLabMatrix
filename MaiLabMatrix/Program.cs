@@ -5,6 +5,9 @@
         static void Main()
         {
             Matrix matrix = new Matrix();
+            LU lu = new LU();
+            Triagonal triagonal = new Triagonal();
+
             int size = 1;
 
             Console.WriteLine("Проверьте, что создали и заполнили файл Matrix.txt");
@@ -30,30 +33,29 @@
                 Console.WriteLine("Matrix.txt Not exist!");
                 return;
             }
-            string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
 
-            double[,] mat = new double[size, size];
-            double[] rightPart = new double[size];
-
-            // разобрать в массивы
-            for (int i = 0; i < size; i++)
+            Console.WriteLine("Выберите необходимый алгоритм:");
+            Console.WriteLine("1.1");
+            Console.WriteLine("1.2");
+            Console.WriteLine("1.3");
+            Console.WriteLine();
+            pressed = Console.ReadLine();
+            Console.WriteLine();
+            
+            switch (pressed)
             {
-                double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
-                for (int j = 0, n = 0; n < size + 1; n++, j++)
-                {
-
-                    if (j == size)
-                    {
-                        rightPart[i] = row[j];
-                    }
-                    else
-                    {
-                        mat[i, j] = row[j];
-                    }
-                }
+                case ("1.1"):
+                    lu.Program(matrix, size);
+                    break;
+                case ("1.2"):
+                    triagonal.Program(matrix, size);
+                    break;
+                case ("1.3"):
+                    break;
+                default:
+                    Console.WriteLine("Неверный выбор алгоритма");
+                    return;
             }
-            matrix.LUP(mat, rightPart);
-            Console.WriteLine("Программа завершена, проверьте файл Result");
         }
     }
 }
