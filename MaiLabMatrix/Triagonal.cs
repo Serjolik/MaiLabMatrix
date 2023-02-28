@@ -1,9 +1,9 @@
 public class Triagonal
-{
+{   // Алгоритм лабораторной 1.2
     public void Program(Matrix matrix, int size)
     {
+        // Записываем массив строк
         string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
-
 
         double[] a = new double[size];
         double[] b = new double[size];
@@ -14,7 +14,6 @@ public class Triagonal
         // разобрать в массивы
         for (int i = 0; i < size; i++)
         {
-
             double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
 
             for (int j = 0; j < size - 1; j++)
@@ -36,6 +35,8 @@ public class Triagonal
                 }
             }
         }
+
+        // Запускаем Алгоритм из библиотеки matrix
         matrix.Progonka(a, b, c, d, size);
         Console.WriteLine("Программа завершена, проверьте файл Result_1_2");
     }

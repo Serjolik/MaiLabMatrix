@@ -9,8 +9,8 @@
 
 
     private void OutputFile(int n, double[,] L, double[,] U, double[,] lu, double[] x)
-    {
-        //Проверка на существование файла с ответами
+    {   // Вывод в файлы
+
         if (!File.Exists("Result_1_1.txt"))
         {
             File.Create("Result_1_1.txt").Close();
@@ -37,7 +37,8 @@
     }
 
     private double[,] Mult(double[,] matrixA, double[,] matrixB)
-    {
+    {   // Функция умножения матриц
+
         if (matrixA.GetLength(1) != matrixB.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
 
@@ -57,7 +58,8 @@
     }
 
     private double[] Mult(double[,] matrixA, double[] matrixB)
-    {
+    {   // Функция умножения матрицы на вектор
+
         if (matrixA.GetLength(1) != matrixB.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
 
@@ -74,7 +76,7 @@
     }
 
     private void PrintTable(StreamWriter outputFile, int n, double[,] matrix)
-    {
+    {   // Печатание таблицы
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
@@ -87,7 +89,7 @@
 
 
     private double[,] Transposition(double[,] a)
-    {
+    {   // Транспонирование
         double[,] r = new double[a.GetLength(0), a.GetLength(1)];
         for (int i = 0; i < a.GetLength(0); i++)
         {
@@ -100,7 +102,7 @@
     }
 
     private double[,] SwapRows(double[,] matrix, int pivot, int i, int n)
-    {
+    {   // Свап строк
         for (int j = 0; j < n; j++)
         {
             double temp;
@@ -112,10 +114,13 @@
     }
 
     public void LUP(double[,] A, double[] rightPart)
-    {
+    {   // Сам алгоритм LUP
+
         int n = A.GetLength(0);
+
         double[,] C = new double[n, n];
         double[,] P = new double[n, n];
+
         C = A;
 
         /* Пусть матрица P - единичная матрица:
@@ -124,6 +129,7 @@
          * [0 0 1 0]
          * [0 0 0 1]
          */
+
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j++)
@@ -193,9 +199,11 @@
         double[] x = new double[n];
         double[] z = new double[n];
 
-        //Находим P*b
+        //Находим P*b Где b - rightPart
         double[] Pb = Mult(P, rightPart);
 
+
+        // Само решение ЛАУ
         for (int i = 0; i < n; i++)
         {
             if (i == 0)
@@ -210,7 +218,6 @@
                 z[i] = Pb[i] - sum;
             }
         }
-
         for (int i = n - 1; i >= 0; i--)
         {
             if (i == n - 1)
@@ -226,6 +233,7 @@
             }
         }
 
+        // LU
         double[,] lu = new double[n, n];
         lu = Mult(Transposition(P), Mult(L, U));
 
@@ -241,7 +249,7 @@
 
 
     public void Progonka(double[] a, double[] b, double[] c, double[] d, int size)
-    {
+    {   // Алгоритм Прогонки
         double[] P = new double[size];
         double[] Q = new double[size];
 
@@ -454,7 +462,7 @@
         return rev;
     }
     public void Mpi(double[,] a, double[] b, int size, double e)
-    {
+    {   // МЕТОД ПРОСТЫХ ИТЕРАЦИЙ
         double e_n = 1;
         double[] X = new double[size];
         double[] X_prev = new double[size];
@@ -488,11 +496,13 @@
     }
 
     public void Zdl(double[,] a, double[] b, int size, double e)
-    {
+    {   // МЕТОД ЗЕЙДЕЛЯ
+
         //вспомогательные матрицы
         double[,] C = new double[size, size];
         double[,] D = new double[size, size];
         double[,] E = new double[size, size];
+
         //заполняем матрицы
         for (int i = 0; i < size; i++)
         {

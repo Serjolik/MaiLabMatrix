@@ -1,15 +1,20 @@
 public class Sim_Zdl
-{
+{   // Алгоритм лабораторной 1.3
     public void Program(Matrix matrix, int size)
     {
+        // Точность вычислений для Зейделя
         double e = 0.01;
 
+        // Записываем массив строк
         string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
 
-        double[,] a = new double[size, size];
-        double[] b = new double[size];
+        // Выделяем память под матрицу и под правую часть
+        double[,] mat = new double[size, size];
+        double[] rightPart = new double[size];
 
+        // Под главную диагональ (как понимаю, судя по алгоритму)
         double[] x_n = new double[size];
+
         // разобрать в массивы
         for (int i = 0; i < size; i++)
         {
@@ -17,21 +22,20 @@ public class Sim_Zdl
             double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
             for (int j = 0, n = 0; n < size + 1; n++, j++)
             {
-
                 if (j == i)
-                {
+                {   // Если главная диагональ
                     x_n[i] = row[j];
-                    a[i, j] = 0;
+                    mat[i, j] = 0;
                 }
 
                 else if (j == size)
-                {
-                    b[i] = row[j];
+                {   // Если последняя строка
+                    rightPart[i] = row[j];
                 }
 
                 else
                 {
-                    a[i, j] = row[j];
+                    mat[i, j] = row[j];
                 }
             }
         }
@@ -42,13 +46,14 @@ public class Sim_Zdl
         {
             for (int j = 0, n = 0; n < size; n++, j++)
             {
-                a[i, j] = -a[i, j] / x_n[i];
+                mat[i, j] = -mat[i, j] / x_n[i];
             }
-            b[i] /= x_n[i];
+            rightPart[i] /= x_n[i];
         }
 
-        matrix.Mpi(a, b, size, e);
-        matrix.Zdl(a, b, size, e);
+        // Запускаем Алгоритм MPI и Алгоритм ZDL из библиотеки
+        matrix.Mpi(mat, rightPart, size, e);
+        matrix.Zdl(mat, rightPart, size, e);
 
         Console.WriteLine("Программа завершена, проверьте файлы Result_1_3");
     }

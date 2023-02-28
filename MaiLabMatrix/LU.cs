@@ -1,11 +1,13 @@
 using System.Drawing;
 
 public class LU
-{
+{   // Алгоритм лабораторной 1.1
     public void Program(Matrix matrix, int size)
     {
+        // Записываем массив строк
         string[] lines = File.ReadAllLines("Matrix.txt").Take(size).ToArray();
 
+        // Записываем двумерную матрицу и вектор правой части
         double[,] mat = new double[size, size];
         double[] rightPart = new double[size];
 
@@ -26,7 +28,10 @@ public class LU
                 }
             }
         }
+
+        // Запускаем Алгоритм из библиотеки matrix
         matrix.LUP(mat, rightPart);
+
         Console.WriteLine("Программа завершена, проверьте файл Result_1_1");
     }
 }
