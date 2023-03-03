@@ -7,6 +7,7 @@
     //  | LU алгоритм и вычисление СЛАУ      |
     //  |------------------------------------|
 
+
     /// <summary>
     /// Выводит в файл выполнение 1.1
     /// </summary>
@@ -23,6 +24,8 @@
             File.Create("Result_1_1.txt").Close();
         }
 
+        var reversedTable = Reversed_m(lu);
+
         using (StreamWriter outputFile = new StreamWriter("Result_1_1.txt"))
         {
             outputFile.WriteLine("L:");
@@ -36,6 +39,20 @@
             outputFile.WriteLine("X:");
             foreach (double i in x)
                 outputFile.WriteLine(i);
+            outputFile.WriteLine();
+
+            outputFile.WriteLine("Reverse:");
+            foreach (double i in reversedTable)
+                outputFile.WriteLine(i);
+            outputFile.WriteLine();
+
+            outputFile.WriteLine("Determinant:");
+            double determinant = 1;
+            for (int i = 0; i < n; i++)
+            {
+                determinant *= U[i, i];
+            }
+            outputFile.WriteLine(determinant);
             outputFile.WriteLine();
 
             outputFile.WriteLine("Check:");
