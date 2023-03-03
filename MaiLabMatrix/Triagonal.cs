@@ -1,4 +1,4 @@
-public class Triagonal
+public class Triagonal : Singleton<Triagonal>
 {   // Алгоритм лабораторной 1.2
     public void Program(Matrix matrix, int size)
     {

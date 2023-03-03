@@ -1,4 +1,4 @@
-public class LU
+public class LU : Singleton<LU>
 {   // Алгоритм лабораторной 1.1
     public void Program(Matrix matrix, int size)
     {   // Записываем массив строк

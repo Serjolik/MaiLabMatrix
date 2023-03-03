@@ -1,4 +1,4 @@
-public class Sim_Zdl
+public class Sim_Zdl : Singleton<Sim_Zdl>
 {   // Алгоритм лабораторной 1.3
     public void Program(Matrix matrix, int size)
     {
