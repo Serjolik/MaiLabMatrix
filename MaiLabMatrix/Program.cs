@@ -13,6 +13,7 @@
             Triagonal triagonal = new Triagonal();
             Sim_Zdl sim_zdl = new Sim_Zdl();
             Yacobi yacobi = new Yacobi();
+            QR qr = new QR();
 
             int size; // Размерность матрицы
 
@@ -52,6 +53,7 @@
             Console.WriteLine("1.2");
             Console.WriteLine("1.3");
             Console.WriteLine("1.4");
+            Console.WriteLine("1.5");
             Console.WriteLine();
             pressed = Console.ReadLine();
             Console.WriteLine();
@@ -69,6 +71,9 @@
                     break;
                 case ("1.4"):
                     yacobi.Program(matrix, size);
+                    break;
+                case ("1.5"):
+                    qr.Program(matrix, size);
                     break;
                 default:
                     Console.WriteLine("Неверный выбор алгоритма");
