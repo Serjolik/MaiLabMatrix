@@ -1,4 +1,4 @@
-class Yacobi
+public class Yacobi : Singleton<Yacobi>
 {
     public void Program(Matrix matrix, int size)
     {   // Used methods in algorithm 1.1 in Matrix.cs

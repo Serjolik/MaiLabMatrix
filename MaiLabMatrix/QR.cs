@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-class QR
+public class QR : Singleton<QR>
 {
     public void Program(Matrix matrix, int size)
     {
