@@ -12,7 +12,7 @@
             LU lu = new LU();
             Triagonal triagonal = new Triagonal();
             Sim_Zdl sim_zdl = new Sim_Zdl();
-            Yacobi yacobi = new Yacobi();
+            Rotation rotation = new Rotation();
             QR qr = new QR();
 
             int size; // Размерность матрицы
@@ -70,7 +70,7 @@
                     sim_zdl.Program(matrix, size);
                     break;
                 case ("1.4"):
-                    yacobi.Program(matrix, size);
+                    rotation.Program(matrix, size);
                     break;
                 case ("1.5"):
                     qr.Program(matrix, size);

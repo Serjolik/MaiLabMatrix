@@ -1,4 +1,4 @@
-public class Yacobi : Singleton<Yacobi>
+public class Rotation : Singleton<Rotation>
 {
     public void Program(Matrix matrix, int size)
     {   // Used methods in algorithm 1.1 in Matrix.cs
@@ -6,9 +6,9 @@ public class Yacobi : Singleton<Yacobi>
         string[] lines = File.ReadAllLines("Matrix.txt").ToArray();
         double[,] a = new double[size, size];
         double max = 0;
-        int n = 0, m = 0; //временные индексы
+        int n = 0, m = 0; //РІСЂРµРјРµРЅРЅС‹Рµ РёРЅРґРµРєСЃС‹
 
-        // разобрать в массив
+        // СЂР°Р·РѕР±СЂР°С‚СЊ РІ РјР°СЃСЃРёРІ
         for (int i = 0; i < size; i++)
         {
             double[] row = lines[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(Double.Parse).ToArray();
@@ -75,7 +75,7 @@ public class Yacobi : Singleton<Yacobi>
             double[,] a_k = new double[size, size];
             a_k = matrix.Mult(matrix.Mult(matrix.Transposition(U_k), a), U_k);
 
-            //критерий окончания
+            //РєСЂРёС‚РµСЂРёР№ РѕРєРѕРЅС‡Р°РЅРёСЏ
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
@@ -100,7 +100,7 @@ public class Yacobi : Singleton<Yacobi>
         }
 
         //nums
-        using (StreamWriter outputFile = new StreamWriter("jacobi_ownnums.txt"))
+        using (StreamWriter outputFile = new StreamWriter("rotationOwnNums.txt"))
         {
             outputFile.WriteLine("Own numbers:");
             for (int i = 0; i < size; i++)
@@ -131,12 +131,12 @@ public class Yacobi : Singleton<Yacobi>
             res = matrix.Mult(res, x);
         }
 
-        using (StreamWriter outputFile = new StreamWriter("jacobi_ownvecs.txt"))
+        using (StreamWriter outputFile = new StreamWriter("rotationOwnVectors.txt"))
         {
             outputFile.WriteLine("Own vectors:");
             for (int i = 0; i < size; i++)
             {
-                outputFile.WriteLine("x" + (i + 1));
+                outputFile.WriteLine("X" + (i + 1));
                 for (int j = 0; j < size; j++)
                 {
                     outputFile.WriteLine(res[j, i]);
