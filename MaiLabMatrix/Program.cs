@@ -1,5 +1,6 @@
 ﻿namespace lab1_LU
 {
+    
     public class Program
     {   // Основная программа
         static void Main()
@@ -11,6 +12,7 @@
             LU lu = new LU();
             Triagonal triagonal = new Triagonal();
             Sim_Zdl sim_zdl = new Sim_Zdl();
+            Yacobi yacobi = new Yacobi();
 
             int size; // Размерность матрицы
 
@@ -49,6 +51,7 @@
             Console.WriteLine("1.1");
             Console.WriteLine("1.2");
             Console.WriteLine("1.3");
+            Console.WriteLine("1.4");
             Console.WriteLine();
             pressed = Console.ReadLine();
             Console.WriteLine();
@@ -63,6 +66,9 @@
                     break;
                 case ("1.3"):
                     sim_zdl.Program(matrix, size);
+                    break;
+                case ("1.4"):
+                    yacobi.Program(matrix, size);
                     break;
                 default:
                     Console.WriteLine("Неверный выбор алгоритма");

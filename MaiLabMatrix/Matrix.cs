@@ -67,7 +67,7 @@
     /// <param name="matrixB">Вторая матрица</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private double[,] Mult(double[,] matrixA, double[,] matrixB)
+    public double[,] Mult(double[,] matrixA, double[,] matrixB)
     {
         if (matrixA.GetLength(1) != matrixB.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
@@ -94,7 +94,7 @@
     /// <param name="Vector">Вектор</param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private double[] Mult(double[,] matrixA, double[] Vector)
+    public double[] Mult(double[,] matrixA, double[] Vector)
     {
         if (matrixA.GetLength(1) != Vector.GetLength(0))
             throw new Exception("Матрицы нельзя перемножить");
@@ -134,7 +134,7 @@
     /// </summary>
     /// <param name="matrix">Матрица которую транспонируем</param>
     /// <returns>Транпонированная матрица</returns>
-    private double[,] Transposition(double[,] matrix)
+    public double[,] Transposition(double[,] matrix)
     {
         double[,] r = new double[matrix.GetLength(0), matrix.GetLength(1)];
         for (int i = 0; i < matrix.GetLength(0); i++)
@@ -697,5 +697,10 @@
             outputFile.WriteLine(it.ToString() + " iterations");
         }
     }
+
+
+
+
+    //----------------------------------------------------------
 
 }
