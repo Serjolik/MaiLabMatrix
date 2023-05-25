@@ -108,8 +108,15 @@ public class SLAU
                     A[i, j] = newA[i, j];
                 }
             }
-        } while (dif > 0.000001);
-        
+        } while (dif > 0.001);
+
+        Console.WriteLine("Матрица");
+        foreach (var num in A)
+        {
+            Console.WriteLine(num);
+        }
+        Console.WriteLine("--------");
+
         Console.WriteLine("Собственные числа:");
         PrintResult(eigenvalues);
         for (int n = 0; n < N; n++)
@@ -137,18 +144,6 @@ public class SLAU
                         eigenvectors[j, k] -= tmp * eigenvectors[i, k];
                 }
             }
-            var eigenvector = new double[N];
-            eigenvector[N - 1] = eigenvectors[N - 1, N - 1];
-            for (int i = N - 2; i >= 0; i--)
-            {
-                eigenvector[i] = eigenvectors[i, N - 1];
-                for (int j = i; j < N; j++)
-                {
-                    eigenvector[i] -= eigenvectors[i, j] * eigenvector[j];
-                }
-            }
-            Console.WriteLine("Собственный вектор {0}:", n + 1);
-            PrintResult(Rationing(eigenvector));
         }
         for (int i = 0; i < 3; i++)
         {
@@ -254,12 +249,13 @@ public class SLAU
         double desc = b * b - 4 * a * c;
         Lamd_i.setRe(-1 * b / (2 * a));
         Lamd_i.setIm(Math.Sqrt(Math.Abs(desc)) / (2 * a));
+        Console.WriteLine("--------");
         Console.WriteLine("Собственные значения матрицы");
         for (int j = 1; j < 3; j++)
         {
             if (j != i && j != i + 1)
             {
-                Console.WriteLine("λ" + j + " = " + MatrA[i,i]);
+                Console.WriteLine("lambda" + j + " = " + MatrA[i,i]);
             }
         }
         Console.WriteLine("lambda" + i + " = " + Lamd_i.getRe() + " + " + Lamd_i.getIm() + "i");
