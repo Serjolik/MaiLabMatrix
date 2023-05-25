@@ -1,6 +1,9 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
+using System.Text.RegularExpressions;
+
 public class QR : Singleton<QR>
 {
     public void Program(Matrix matrix, int size)
@@ -120,6 +123,7 @@ public class SLAU
                 }
             }
 
+            
             double tmp;
             for (int i = 0; i < N; i++)
             {
@@ -145,6 +149,16 @@ public class SLAU
             }
             Console.WriteLine("Собственный вектор {0}:", n + 1);
             PrintResult(Rationing(eigenvector));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = i + 1; j < 3; j++)
+            {
+                if (Math.Abs(A[j, i]) > 0.0001)
+                {
+                    complex(A, i);
+                }
+            }
         }
     }
 
@@ -229,6 +243,57 @@ public class SLAU
             eigenvector[i] = eigenvector[i] / Math.Sqrt(sum);
         }
         return eigenvector;
+    }
+
+    private void complex(double[,] MatrA, int i)
+    {
+        Complex Lamd_i = new Complex();
+        double a = 1;
+        double b = -1 * (MatrA[i + 1, i + 1] + MatrA[i,i]);
+        double c = MatrA[i,i] * MatrA[i + 1,i + 1] - MatrA[i,i + 1] * MatrA[i + 1,i];
+        double desc = b * b - 4 * a * c;
+        Lamd_i.setRe(-1 * b / (2 * a));
+        Lamd_i.setIm(Math.Sqrt(Math.Abs(desc)) / (2 * a));
+        Console.WriteLine("Собственные значения матрицы");
+        for (int j = 1; j < 3; j++)
+        {
+            if (j != i && j != i + 1)
+            {
+                Console.WriteLine("λ" + j + " = " + MatrA[i,i]);
+            }
+        }
+        Console.WriteLine("lambda" + i + " = " + Lamd_i.getRe() + " + " + Lamd_i.getIm() + "i");
+        Console.WriteLine("lambda" + (i + 1) + " = " + Lamd_i.getRe() + " - " + Lamd_i.getIm() + "i");
+    }
+
+    public class Complex
+    {
+        public void setRe(double re)
+        {
+            this.re = re;
+        }
+
+        public void setIm(double im)
+        {
+            this.im = im;
+        }
+
+        public double getRe()
+        {
+            return re;
+        }
+
+        public double getIm()
+        {
+            return im;
+        }
+
+        private double re;
+        private double im;
+
+
+
+
     }
 
 
